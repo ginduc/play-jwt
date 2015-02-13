@@ -4,7 +4,7 @@ import java.util.Date
 import scala.concurrent.Future
 import play.api.mvc._
 import play.api.mvc.Results._
-import play.api.Play
+import play.api.{Logger, Play}
 import play.api.Play.current
 import play.api.libs.json.JsValue
 import com.nimbusds.jose.crypto.{MACSigner, MACVerifier}
@@ -53,24 +53,24 @@ object JWTSession {
 
     // Check expiration date
     if (!new Date().before(payload.getExpirationTime)) {
-      println("Token expired: " + payload.getExpirationTime)
+      Logger.error("Token expired: " + payload.getExpirationTime)
       return false
     }
 
     // Match Issuer
     if (!payload.getIssuer.equals(issuer)) {
-      println("Issuer mismatch: " + payload.getIssuer)
+      Logger.error("Issuer mismatch: " + payload.getIssuer)
       return false
     }
 
     // Match Audience
     if (payload.getAudience != null && payload.getAudience.size() > 0) {
       if (!payload.getAudience.get(0).equals(audience)) {
-        println("Audience mismatch: " + payload.getAudience.get(0))
+        Logger.error("Audience mismatch: " + payload.getAudience.get(0))
         return false
       }
     } else {
-      println("Audience is required")
+      Logger.error("Audience is required")
       return false
     }
 
