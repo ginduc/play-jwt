@@ -2,6 +2,8 @@ name := """play-jwt"""
 
 version := "0.1.0"
 
+isSnapshot := true
+
 organization := "dynobjx"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
