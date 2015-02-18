@@ -40,7 +40,7 @@ object Signed extends ActionBuilder[JWTSignedRequest] {
 trait PlayJWTImplicits {
   implicit class JWTSignedResult(result: Result) {
     def withSignedJWT(user: JsValue)(implicit request: RequestHeader): Result = {
-      result.withHeaders(AUTHORIZATION -> (JWTSession.tokenPrefix + JWTSession.sign(user)))
+      result.withHeaders(AUTHORIZATION -> JWTSession.signAuthorizationToken(user))
     }
   }
 }

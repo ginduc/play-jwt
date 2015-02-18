@@ -78,4 +78,6 @@ object JWTSession {
 
     signedJWT.getJWTClaimsSet
   }
+
+  def signAuthorizationToken(user: JsValue) = JWTSession.tokenPrefix + JWTSession.sign(user)
 }
