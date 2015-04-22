@@ -32,8 +32,7 @@ public class JWTSignedAction extends play.mvc.Action.Simple {
             final String authHeader = ctx.request().getHeader(AUTHORIZATION);
 
             if (authHeader != null && authHeader.startsWith(AUTH_HEADER_PREFIX)) {
-                final String token = authHeader.substring(AUTH_HEADER_PREFIX.length());
-                if (JWTSession.verify(token)) {
+                if (JWTSession.verify(authHeader)) {
                     return delegate.call(ctx);
                 }
             }
